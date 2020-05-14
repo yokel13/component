@@ -1,0 +1,20 @@
+{
+  "name": "yokel/component",
+  "description": "Наследник класса CBitrixComponent",
+  "keywords": ["php", "bitrix"],
+  "homepage": "https://github.com/yokel13/component",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Andrey Konovalov",
+      "email": "hello@yokel.tech"
+    }
+  ],
+  "require": {
+    "php": ">=5.6"
+  },
+  "autoload": {
+    "psr-0": {"Yokel": "src/"}
+  }
+}
