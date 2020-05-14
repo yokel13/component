@@ -1,0 +1,2 @@
+# component
+Наследник от CBitrixComponent
