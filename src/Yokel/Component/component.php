@@ -81,6 +81,11 @@ class Component extends \CBitrixComponent {
     protected $action = self::DEFAULT_ACTION;
 
     /**
+     * @var bool Не подключать шаблон компонента
+     */
+    protected $skipTemplate = false;
+
+    /**
      * Создаёт идентификатор кеша компонента
      */
     protected function createCacheID() {
@@ -153,6 +158,7 @@ class Component extends \CBitrixComponent {
 
     /**
      * Получает результат
+     * @return mixed
      */
     public function executeComponent() {
         // это AJAX-запрос
@@ -182,9 +188,9 @@ class Component extends \CBitrixComponent {
                     if ($this->arResult) {
                         // сохраняем страницу шаблона в кеш
                         $this->arResult['templatePage'] = $this->templatePage;
-
-                        $obCache->endDataCache($this->arResult);
                     }
+
+                    $obCache->endDataCache($this->arResult);
                 }
             } else {
                 // кеш не используется
@@ -192,16 +198,24 @@ class Component extends \CBitrixComponent {
             }
 
             // показать результат
-            $this->showResult();
+            return $this->showResult();
+        } else {
+            return false;
         }
     }
 
     /**
      * Отображает результат
+     * @return mixed
      */
     public function showResult() {
         // var
         global $APPLICATION;
+
+        // сразу вернём результат (без подключения шаблона)
+        if ($this->skipTemplate) {
+            return $this->arResult;
+        }
 
         if ($this->resultType === self::RESULT_TYPE_HTML) {
             // HTML
@@ -222,6 +236,8 @@ class Component extends \CBitrixComponent {
 
             $this->finalActions(true);
         }
+
+        return true;
     }
 
     /**
